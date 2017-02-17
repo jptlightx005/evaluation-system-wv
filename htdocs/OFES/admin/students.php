@@ -1,6 +1,8 @@
 <?php include('header.php'); ?>
 
 <?php include('navbar_students.php'); ?>
+
+
     <div class="container">
 		<div class="margin-top">
 			<div class="row">	
@@ -33,6 +35,49 @@
 								
 									<button type="submit" name="sort_students" class="btn"><i class="icon-check icon-large"></i>&nbsp;Submit</button>
 								</form>
+								
+								<?php
+	if(isset($_REQUEST['action'])){
+		$student_id=$_REQUEST['id'];
+
+		$query=mysql_query("select subject from students where id='$student_id'") or die(mysql_error());
+		
+		$current_subject = "";
+
+		while ($row = mysql_fetch_assoc($query)) {
+			$current_subject = $row['subject'];
+		}
+
+		if($current_subject == ""){
+			$query = mysql_query("SELECT code FROM subject") or die(mysql_error());
+			
+			$subjects = [];
+			while($row = mysql_fetch_array($query)){
+				$subjects[] = $row['code'];
+			}
+			
+			$temp = "";
+			$subject_count = count($subjects) - 1;
+			for($i = 0; $i <= $subject_count; $i++){
+
+				$temp = $subjects[$i];
+				$r = rand(0, $subject_count);
+				$subjects[$i] = $subjects[$r];
+				$subjects[$r] = $temp;
+
+			}
+			
+			$subject_query = "";
+			for($i = 0; $i < 5; $i++){
+				$subject_query .= "{$subjects[$i]}|---|";
+			}
+			
+			$subject_query = substr($subject_query, 0, strlen($subject_query) - 5);
+			
+			mysql_query("update students set subject='$subject_query' where id='$student_id'")or die(mysql_error());
+		}
+	}
+?>
                             <table cellpadding="0" cellspacing="0" border="0" class="table  table-bordered" id="example">
                              
 								<p><a href="add_student.php" class="btn btn-success"><i class="icon-plus"></i>&nbsp;Add Student</a></p>
@@ -65,14 +110,20 @@
 													<td width="80"><?php echo $row['year']; ?></td> 
 													<td width="80"><?php echo $row['section']; ?></td> 
 													<td width="80"><?php echo $row['status']; ?></td> 
-													<td><?php 
+													<td>
+														<select>
+														<?php 
 			
 
 															$subjects  = $row['subject'];
 															$list =  explode('|---|', $subjects);
-															foreach ($list as $item) {?>
-															<?php echo $item;?>--<?php
-															}?>
+
+															foreach ($list as $item) { ?>
+																<option><?php echo $item; ?></option>
+															<?php }
+															?>
+														</select>
+													
 															
 													</td>
 															<?php include('toolttip_edit_delete.php'); ?>
@@ -80,7 +131,7 @@
 															<a  rel="tooltip"  title="Delete Student" id="<?php echo $id; ?>" href="#delete_student<?php echo $id; ?>" data-toggle="modal"    class="btn btn-danger"><i class="icon-trash icon-large"></i></a>
 															<?php include('delete_student_modal.php'); ?>
 															<a  rel="tooltip"  title="Edit Student" id="e<?php echo $id; ?>" href="edit_student.php<?php echo '?id='.$id; ?>" class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
-															<a  rel="tooltip"  title="Add Subject" id="a<?php echo $id; ?>" href="add_subjects.php<?php echo '?id='.$id; ?>" class="btn btn-info"><i class="icon-plus icon-large"></i></a>
+															<?php if(count($list) - 1 == 0){ ?><a  rel="tooltip"  title="Add Subject" id="a<?php echo $id; ?>" href="<?php echo '?action=add_subjects&id='.$id; ?>" class="btn btn-info"><i class="icon-plus icon-large"></i></a> <?php } ?>
 													</td>
 										
 												</tr>
