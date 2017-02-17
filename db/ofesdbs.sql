@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2017 at 02:59 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Feb 17, 2017 at 05:14 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ofesdbs`
@@ -26,13 +26,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE IF NOT EXISTS `admin` (
-`id` int(11) NOT NULL,
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
   `firstname` varchar(16) NOT NULL,
   `lastname` varchar(16) NOT NULL,
   `username` varchar(16) NOT NULL,
   `password` varchar(16) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
@@ -48,11 +48,11 @@ INSERT INTO `admin` (`id`, `firstname`, `lastname`, `username`, `password`) VALU
 -- Table structure for table `contents`
 --
 
-CREATE TABLE IF NOT EXISTS `contents` (
-`id` int(11) NOT NULL,
+CREATE TABLE `contents` (
+  `id` int(11) NOT NULL,
   `header` varchar(255) NOT NULL,
   `body` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `contents`
@@ -67,12 +67,12 @@ INSERT INTO `contents` (`id`, `header`, `body`) VALUES
 -- Table structure for table `course`
 --
 
-CREATE TABLE IF NOT EXISTS `course` (
-`course_id` int(11) NOT NULL,
+CREATE TABLE `course` (
+  `course_id` int(11) NOT NULL,
   `course_dept` text NOT NULL,
   `code` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `course`
@@ -90,11 +90,11 @@ INSERT INTO `course` (`course_id`, `course_dept`, `code`, `title`) VALUES
 -- Table structure for table `evaluation_question`
 --
 
-CREATE TABLE IF NOT EXISTS `evaluation_question` (
-`q_id` int(11) NOT NULL,
+CREATE TABLE `evaluation_question` (
+  `q_id` int(11) NOT NULL,
   `e_id` int(11) NOT NULL,
   `question` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_question`
@@ -128,11 +128,11 @@ INSERT INTO `evaluation_question` (`q_id`, `e_id`, `question`) VALUES
 -- Table structure for table `evaluation_rating`
 --
 
-CREATE TABLE IF NOT EXISTS `evaluation_rating` (
-`rating_id` int(100) NOT NULL,
+CREATE TABLE `evaluation_rating` (
+  `rating_id` int(100) NOT NULL,
   `rating_name` text NOT NULL,
   `rating_value` int(5) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_rating`
@@ -151,8 +151,8 @@ INSERT INTO `evaluation_rating` (`rating_id`, `rating_name`, `rating_value`) VAL
 -- Table structure for table `evaluation_result`
 --
 
-CREATE TABLE IF NOT EXISTS `evaluation_result` (
-`evaluation_id` int(11) NOT NULL,
+CREATE TABLE `evaluation_result` (
+  `evaluation_id` int(11) NOT NULL,
   `student_id` varchar(11) NOT NULL,
   `student_name` varchar(100) NOT NULL,
   `faculty_id` varchar(11) NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `evaluation_result` (
   `management3` int(1) NOT NULL,
   `management4` int(1) NOT NULL,
   `management5` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_result`
@@ -193,8 +193,8 @@ INSERT INTO `evaluation_result` (`evaluation_id`, `student_id`, `student_name`, 
 -- Table structure for table `faculty`
 --
 
-CREATE TABLE IF NOT EXISTS `faculty` (
-`id_teacher` int(50) NOT NULL,
+CREATE TABLE `faculty` (
+  `id_teacher` int(50) NOT NULL,
   `teacherid` varchar(100) NOT NULL,
   `password` varchar(30) NOT NULL,
   `fname` varchar(100) NOT NULL,
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `faculty` (
   `academic_rank` varchar(100) NOT NULL,
   `program` varchar(100) NOT NULL,
   `subject` varchar(100) NOT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `faculty`
@@ -221,8 +221,8 @@ INSERT INTO `faculty` (`id_teacher`, `teacherid`, `password`, `fname`, `mname`, 
 -- Table structure for table `students`
 --
 
-CREATE TABLE IF NOT EXISTS `students` (
-`id` int(11) NOT NULL,
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL,
   `studentsID` varchar(8) NOT NULL,
   `password` varchar(100) NOT NULL,
   `firstname` text NOT NULL,
@@ -233,15 +233,16 @@ CREATE TABLE IF NOT EXISTS `students` (
   `school` text NOT NULL,
   `year` text NOT NULL,
   `section` text NOT NULL,
-  `status` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `status` text NOT NULL,
+  `subjects_evaluate` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `studentsID`, `password`, `firstname`, `middlename`, `lastname`, `subject`, `course`, `school`, `year`, `section`, `status`) VALUES
-(1, '14-1176', '1234', 'Eric', 'Amena', 'Villones', 'IT213|---|IT215|---|IT225(Elective 3)|---|IT214|---|IT226(Elective 4)|---|LIT102|---|', 'BSInfoTech', '', 'Third Year', 'B', 'Regular');
+INSERT INTO `students` (`id`, `studentsID`, `password`, `firstname`, `middlename`, `lastname`, `subject`, `course`, `school`, `year`, `section`, `status`, `subjects_evaluate`) VALUES
+(1, '14-1176', '1234', 'Eric', 'Amena', 'Villones', '', 'BSInfoTech', '', 'Third Year', 'B', 'Regular', '');
 
 -- --------------------------------------------------------
 
@@ -249,15 +250,15 @@ INSERT INTO `students` (`id`, `studentsID`, `password`, `firstname`, `middlename
 -- Table structure for table `subject`
 --
 
-CREATE TABLE IF NOT EXISTS `subject` (
-`subject_id` int(11) NOT NULL,
+CREATE TABLE `subject` (
+  `subject_id` int(11) NOT NULL,
   `code` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `year` varchar(100) NOT NULL,
   `term` varchar(100) NOT NULL,
   `teacherid` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subject`
@@ -280,55 +281,55 @@ INSERT INTO `subject` (`subject_id`, `code`, `title`, `description`, `year`, `te
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contents`
 --
 ALTER TABLE `contents`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `course`
 --
 ALTER TABLE `course`
- ADD PRIMARY KEY (`course_id`);
+  ADD PRIMARY KEY (`course_id`);
 
 --
 -- Indexes for table `evaluation_question`
 --
 ALTER TABLE `evaluation_question`
- ADD PRIMARY KEY (`q_id`);
+  ADD PRIMARY KEY (`q_id`);
 
 --
 -- Indexes for table `evaluation_rating`
 --
 ALTER TABLE `evaluation_rating`
- ADD PRIMARY KEY (`rating_id`);
+  ADD PRIMARY KEY (`rating_id`);
 
 --
 -- Indexes for table `evaluation_result`
 --
 ALTER TABLE `evaluation_result`
- ADD PRIMARY KEY (`evaluation_id`);
+  ADD PRIMARY KEY (`evaluation_id`);
 
 --
 -- Indexes for table `faculty`
 --
 ALTER TABLE `faculty`
- ADD PRIMARY KEY (`id_teacher`);
+  ADD PRIMARY KEY (`id_teacher`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
- ADD PRIMARY KEY (`subject_id`);
+  ADD PRIMARY KEY (`subject_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -338,47 +339,47 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `contents`
 --
 ALTER TABLE `contents`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `course`
 --
 ALTER TABLE `course`
-MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `evaluation_question`
 --
 ALTER TABLE `evaluation_question`
-MODIFY `q_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `q_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `evaluation_rating`
 --
 ALTER TABLE `evaluation_rating`
-MODIFY `rating_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `rating_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `evaluation_result`
 --
 ALTER TABLE `evaluation_result`
-MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-MODIFY `id_teacher` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id_teacher` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

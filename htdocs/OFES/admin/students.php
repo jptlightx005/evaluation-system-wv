@@ -43,38 +43,56 @@
 		$query=mysql_query("select subject from students where id='$student_id'") or die(mysql_error());
 		
 		$current_subject = "";
-
+		
 		while ($row = mysql_fetch_assoc($query)) {
 			$current_subject = $row['subject'];
 		}
-
-		if($current_subject == ""){
-			$query = mysql_query("SELECT code FROM subject") or die(mysql_error());
-			
-			$subjects = [];
-			while($row = mysql_fetch_array($query)){
-				$subjects[] = $row['code'];
+		if($_REQUEST['action'] == "add_subjects"){
+			if($current_subject == ""){
+				$query = mysql_query("SELECT code FROM subject") or die(mysql_error());
+				
+				$subjects = "";
+				while($row = mysql_fetch_array($query)){
+					$subjects .= "{$row['code']}|---|";
+				}
+				$subjects = substr($subjects, 0, strlen($subjects) - 5);				
+				
+				mysql_query("update students set subject='$subjects' where id='$student_id'")or die(mysql_error());
 			}
-			
-			$temp = "";
-			$subject_count = count($subjects) - 1;
-			for($i = 0; $i <= $subject_count; $i++){
+		}else if($_REQUEST['action'] == "randomize_subjects"){
+			if($current_subject != ""){
+				
+				$current_subjects = explode('|---|', $current_subject);;
 
-				$temp = $subjects[$i];
-				$r = rand(0, $subject_count);
-				$subjects[$i] = $subjects[$r];
-				$subjects[$r] = $temp;
+				$temp = "";
+				$subject_count = count($current_subjects);
+				for($i = 0; $i <= $subject_count - 1; $i++){
 
+					$temp = $current_subjects[$i];
+					$r = rand(0, $subject_count);
+					$current_subjects[$i] = $current_subjects[$r];
+					$current_subjects[$r] = $temp;
+
+				}
+				
+				$subject_query = "";
+				for($i = 0; $i < 5; $i++){
+					if($current_subjects[$i] != "")
+						$subject_query .= "{$current_subjects[$i]}|---|";
+				}
+				$subject_query = substr($subject_query, 0, strlen($subject_query) - 5);
+				echo $subject_query . "<br>";
+				
+				$new_subject_query = "";
+				for($i = 5; $i < count($current_subjects) - 1; $i++){
+					if($current_subjects[$i] != "")
+						$new_subject_query .= "{$current_subjects[$i]}|---|";
+				}
+				$new_subject_query = substr($new_subject_query, 0, strlen($new_subject_query) - 5);
+				
+				mysql_query("update students set subjects_evaluate='$subject_query' where id='$student_id'")or die(mysql_error());
+				mysql_query("update students set subject='$new_subject_query' where id='$student_id'")or die(mysql_error());
 			}
-			
-			$subject_query = "";
-			for($i = 0; $i < 5; $i++){
-				$subject_query .= "{$subjects[$i]}|---|";
-			}
-			
-			$subject_query = substr($subject_query, 0, strlen($subject_query) - 5);
-			
-			mysql_query("update students set subject='$subject_query' where id='$student_id'")or die(mysql_error());
 		}
 	}
 ?>
@@ -94,6 +112,7 @@
                                         <th>Student Status</th>       
 										<th>Subjects</th>    										
                                         <th>Action</th>
+										<th>Sbj 2 b evl8d</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,11 +124,11 @@
 													<td><?php echo $row['studentsID']; ?></td> 
 													<td><?php echo $row['password']; ?></td>                              
 													<td><?php echo $row['firstname']." ".$row['middlename']."  ".$row['lastname']; ?></td>
-													<td width="80"><?php echo $row['school']; ?> </td> 
-													<td width="80"><?php echo $row['course']; ?> </td> 
-													<td width="80"><?php echo $row['year']; ?></td> 
-													<td width="80"><?php echo $row['section']; ?></td> 
-													<td width="80"><?php echo $row['status']; ?></td> 
+													<td><?php echo $row['school']; ?> </td> 
+													<td><?php echo $row['course']; ?> </td> 
+													<td><?php echo $row['year']; ?></td> 
+													<td><?php echo $row['section']; ?></td> 
+													<td><?php echo $row['status']; ?></td> 
 													<td>
 														<select>
 														<?php 
@@ -133,7 +152,32 @@
 															<a  rel="tooltip"  title="Edit Student" id="e<?php echo $id; ?>" href="edit_student.php<?php echo '?id='.$id; ?>" class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
 															<?php if(count($list) - 1 == 0){ ?><a  rel="tooltip"  title="Add Subject" id="a<?php echo $id; ?>" href="<?php echo '?action=add_subjects&id='.$id; ?>" class="btn btn-info"><i class="icon-plus icon-large"></i></a> <?php } ?>
 													</td>
-										
+													<td>
+													<?php
+														$subjects_evaluate  = $row['subjects_evaluate'];
+														$e_list =  explode('|---|', $subjects_evaluate);
+														
+														if(count($e_list) - 1 != 0){ // if subjects to be evaluated is not empty
+															?>
+															<select>
+															<?php 
+																foreach ($e_list as $item) { ?>
+																	<option><?php echo $item; ?></option>
+															<?php } ?>
+															</select>
+															<?php
+														}else{ 
+															if(count($list) - 1 != 0){
+														?>
+															<a  rel="tooltip"  title="Random Subjects" id="a<?php echo $id; ?>" href="<?php echo '?action=randomize_subjects&id='.$id; ?>" class="btn btn-info">Randomize</a>
+														<?php }else{ ?>
+															Please add subjects first!
+													<?php	
+															}
+														}
+													?>
+														
+													</td>
 												</tr>
 											<?php  }  ?>
                            
