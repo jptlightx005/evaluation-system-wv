@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2017 at 03:59 PM
+-- Generation Time: Feb 17, 2017 at 02:59 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -177,14 +177,15 @@ CREATE TABLE IF NOT EXISTS `evaluation_result` (
   `management3` int(1) NOT NULL,
   `management4` int(1) NOT NULL,
   `management5` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `evaluation_result`
 --
 
 INSERT INTO `evaluation_result` (`evaluation_id`, `student_id`, `student_name`, `faculty_id`, `faculty_name`, `commitment1`, `commitment2`, `commitment3`, `commitment4`, `commitment5`, `knowledge1`, `knowledge2`, `knowledge3`, `knowledge4`, `knowledge5`, `teaching1`, `teaching2`, `teaching3`, `teaching4`, `teaching5`, `management1`, `management2`, `management3`, `management4`, `management5`) VALUES
-(15, '14-1176', 'Eric Amena Villones', '14-1236', 'Adam  P. Pagurayan', 5, 5, 5, 5, 5, 4, 3, 1, 5, 4, 5, 1, 5, 1, 5, 3, 5, 3, 5, 3);
+(15, '14-1176', 'Eric Amena Villones', '14-1236', 'Adam  P. Pagurayan', 5, 5, 5, 5, 5, 4, 3, 1, 5, 4, 5, 1, 5, 1, 5, 3, 5, 3, 5, 3),
+(16, '14-0411', 'Caroleen Castaneda Pojol', '14-1234', 'Winston C. Corneja', 5, 5, 5, 5, 5, 5, 5, 4, 3, 2, 1, 5, 5, 4, 3, 5, 4, 3, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -233,15 +234,14 @@ CREATE TABLE IF NOT EXISTS `students` (
   `year` text NOT NULL,
   `section` text NOT NULL,
   `status` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`id`, `studentsID`, `password`, `firstname`, `middlename`, `lastname`, `subject`, `course`, `school`, `year`, `section`, `status`) VALUES
-(19, '14-1176', '1234', 'Eric', 'Amena', 'Villones', 'IT213|---|IT215|---|LIT102|---|HUM102|---|IT - LIT102 - Literatures of the World - Marilou L. Lee|---|ICT - IT213 - Fundamentals of Software Engineering - Adam P. Pagurayan|---|IT - LIT102 - Literatures of the World - Marilou L. Lee|---|IT213|---|', 'BSInfoTech', 'Business and Management', 'Third Year', 'B', 'Regular'),
-(25, '14-1177', '1234', 'Shairmaine', 'Bantre', 'Lapido', 'ICT - IT213 - Fundamentals of Software Engineering - Winston C. Corneja|---|IT213|---|', 'BSInfoTech', 'Information and Communications Technology', 'Third Year', 'B', 'Regular');
+(1, '14-1176', '1234', 'Eric', 'Amena', 'Villones', 'IT213|---|IT215|---|IT225(Elective 3)|---|IT214|---|IT226(Elective 4)|---|LIT102|---|', 'BSInfoTech', '', 'Third Year', 'B', 'Regular');
 
 -- --------------------------------------------------------
 
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `subject` (
   `year` varchar(100) NOT NULL,
   `term` varchar(100) NOT NULL,
   `teacherid` varchar(8) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subject`
@@ -270,8 +270,7 @@ INSERT INTO `subject` (`subject_id`, `code`, `title`, `description`, `year`, `te
 (4, 'IT214', 'Computer Security Standardization', 'All about Computer Security', 'Third Year', '2nd', '14-1237'),
 (5, 'IT226(Elective 4)', 'Introduction to Distributed Systems', 'Advance lessons on Client/Server Programming', 'Third Year', '2nd', '14-1235'),
 (6, 'HUM102', 'Philosophy of Man', 'Philosophy ', 'Third Year', '2nd', '14-1235'),
-(7, 'LIT102', 'Literatures of the World', 'Literatures all around the World', 'Third Year', '2nd', '14-1237'),
-(9, 'IT213', 'Fundamentals of Software Engineering', 'Discussion on Thesis', 'Third Year', '2nd', '14-1236');
+(7, 'LIT102', 'Literatures of the World', 'Literatures all around the World', 'Third Year', '2nd', '14-1237');
 
 --
 -- Indexes for dumped tables
@@ -364,7 +363,7 @@ MODIFY `rating_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT for table `evaluation_result`
 --
 ALTER TABLE `evaluation_result`
-MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `evaluation_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `faculty`
 --
@@ -374,12 +373,12 @@ MODIFY `id_teacher` int(50) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
