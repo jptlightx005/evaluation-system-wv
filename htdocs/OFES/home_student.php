@@ -66,9 +66,22 @@ header('Location: index.php');
 		
 		$query = "SELECT * FROM subject WHERE ";
 		$subquery = "";	
-		foreach($subjects as $subject){
+	$temp = "";
+	$subject_count = count($subjects);
+
+		for($i = 0; $i < $subject_count; $i++){
+
+			$temp = $subjects[$i];
+			$r = rand(0, $subject_count - 1);
+			$subjects[$i] = $subjects[$r];
+			$subjects[$r] = temp;
+
+		}
+			for($i = 0; $i < 5; $i++){
+			$subject = $subjects[$i];
 			$subquery .= "code = '$subject' OR ";
 		}
+
 		$query .= $subquery;
 		
 		$query = substr($query, 0, strlen($query) - 4);
