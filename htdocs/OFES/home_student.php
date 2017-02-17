@@ -66,18 +66,19 @@ header('Location: index.php');
 		
 		$query = "SELECT * FROM subject WHERE ";
 		$subquery = "";	
-	$temp = "";
-	$subject_count = count($subjects);
+		$temp = "";
+		$subject_count = count($subjects) - 1;
 
 		for($i = 0; $i < $subject_count; $i++){
 
 			$temp = $subjects[$i];
 			$r = rand(0, $subject_count - 1);
 			$subjects[$i] = $subjects[$r];
-			$subjects[$r] = temp;
+			$subjects[$r] = $temp;
 
 		}
-			for($i = 0; $i < 5; $i++){
+		
+		for($i = 0; $i < 5; $i++){
 			$subject = $subjects[$i];
 			$subquery .= "code = '$subject' OR ";
 		}
@@ -85,7 +86,7 @@ header('Location: index.php');
 		$query .= $subquery;
 		
 		$query = substr($query, 0, strlen($query) - 4);
-
+		
 		mysql_select_db('ofesdbs',mysql_connect('localhost','root',''))or die(mysql_error());
 		$result =mysql_query($query) or die(mysql_error());
 		
